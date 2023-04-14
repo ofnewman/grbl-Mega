@@ -459,38 +459,75 @@
   // CNC milling or laser cutting. Unlike Marlin, these defaults are only applied when the 
   // EEPROM is explicitly wiped, either by a `$RST=*` command or Grbl detecting a settings
   // version type change (not frequent).
-  #define DEFAULT_X_STEPS_PER_MM 80.0
-  #define DEFAULT_Y_STEPS_PER_MM 80.0
-  #define DEFAULT_Z_STEPS_PER_MM 80.0
-  #define DEFAULT_X_MAX_RATE 2500.0 // mm/min
-  #define DEFAULT_Y_MAX_RATE 2500.0 // mm/min
-  #define DEFAULT_Z_MAX_RATE 500.0 // mm/min
+  
+  // EXAMPLE OUTPUT:
+  // $0=10 (step pulse, usec)
+  // $1=25 (step idle delay, msec)
+  // $2=0 (step port invert mask:00000000)
+  // $3=7 (dir port invert mask:00000011)
+  // $4=0 (step enable invert, bool)
+  // $5=0 (limit pins invert, bool)
+  // $6=0 (probe pin invert, bool)
+  // $10=3 (status report mask:00000011)
+  // $11=0.010 (junction deviation, mm)
+  // $12=0.002 (arc tolerance, mm)
+  // $13=0 (report inches, bool)
+  // $20=1 (soft limits, bool)
+  // $21=1 (hard limits, bool)
+  // $22=1 (homing cycle, bool)
+  // $23=0 (homing dir invert mask:00000000)
+  // $24=25.000 (homing feed, mm/min)
+  // $25=500.000 (homing seek, mm/min)
+  // $26=250 (homing debounce, msec)
+  // $27=1.000 (homing pull-off, mm)
+  // $30=5000 (max spindle speed, RPM)
+  // $31=1000 (min spindle speed, RPM)
+  // $32=0 (laser mode off)
+  // $100=52.500 (x, step/mm)
+  // $101=52.500 (y, step/mm)
+  // $102=52.500 (z, step/mm)
+  // $110=800.000 (x max rate, mm/min)
+  // $111=800.000 (y max rate, mm/min)
+  // $112=800.000 (z max rate, mm/min)
+  // $120=10.000 (x accel, mm/sec^2)
+  // $121=10.000 (y accel, mm/sec^2)
+  // $122=10.000 (z accel, mm/sec^2)
+  // $130=200.000 (x max travel, mm)
+  // $131=200.000 (y max travel, mm)
+  // $132=200.000 (z max travel, mm)
+
+  #define DEFAULT_X_STEPS_PER_MM 52.5
+  #define DEFAULT_Y_STEPS_PER_MM 52.5
+  #define DEFAULT_Z_STEPS_PER_MM 52.5
+  #define DEFAULT_X_MAX_RATE 800.0 // mm/min
+  #define DEFAULT_Y_MAX_RATE 800.0 // mm/min
+  #define DEFAULT_Z_MAX_RATE 800.0 // mm/min
   #define DEFAULT_X_ACCELERATION (100.0*60.0*60.0) // 10*60*60 mm/min^2 = 10 mm/sec^2
   #define DEFAULT_Y_ACCELERATION (100.0*60.0*60.0) // 10*60*60 mm/min^2 = 10 mm/sec^2
   #define DEFAULT_Z_ACCELERATION (100.0*60.0*60.0) // 10*60*60 mm/min^2 = 10 mm/sec^2
   #define DEFAULT_X_MAX_TRAVEL 200.0 // mm
   #define DEFAULT_Y_MAX_TRAVEL 200.0 // mm
   #define DEFAULT_Z_MAX_TRAVEL 200.0 // mm
-  #define DEFAULT_SPINDLE_RPM_MAX 1000.0 // rpm
+  #define DEFAULT_SPINDLE_RPM_MAX 5000.0 // rpm
   #define DEFAULT_SPINDLE_RPM_MIN 0.0 // rpm
   #define DEFAULT_STEP_PULSE_MICROSECONDS 10
   #define DEFAULT_STEPPING_INVERT_MASK 0
   #define DEFAULT_DIRECTION_INVERT_MASK 0
-  #define DEFAULT_STEPPER_IDLE_LOCK_TIME 255 // msec (0-254, 255 keeps steppers enabled)
-  #define DEFAULT_STATUS_REPORT_MASK 1 // MPos enabled
-  #define DEFAULT_JUNCTION_DEVIATION 0.02 // mm
+  #define DEFAULT_STEPPER_IDLE_LOCK_TIME 255 // msec (0-254, 255 keeps steppers enabled) // TODO: 25 (?)
+  #define DEFAULT_STATUS_REPORT_MASK 3 // MPos enabled
+  #define DEFAULT_JUNCTION_DEVIATION 0.02 // mm // TODO: 0.01 (?)
   #define DEFAULT_ARC_TOLERANCE 0.002 // mm
   #define DEFAULT_REPORT_INCHES 0 // false
   #define DEFAULT_INVERT_ST_ENABLE 0 // false
   #define DEFAULT_INVERT_LIMIT_PINS 0 // false
-  #define DEFAULT_SOFT_LIMIT_ENABLE 0 // true
-  #define DEFAULT_HARD_LIMIT_ENABLE 0  // false
+  #define DEFAULT_SOFT_LIMIT_ENABLE 1 // true
+  #define DEFAULT_HARD_LIMIT_ENABLE 1  // false
   #define DEFAULT_INVERT_PROBE_PIN 0 // false
   #define DEFAULT_LASER_MODE 0 // false
-  #define DEFAULT_HOMING_ENABLE 0  // true
-  #define DEFAULT_HOMING_DIR_MASK 0 // move positive dir
-  #define DEFAULT_HOMING_FEED_RATE 500.0 // mm/min
-  #define DEFAULT_HOMING_SEEK_RATE 2000.0 // mm/min
+  #define DEFAULT_HOMING_ENABLE 1  // true
+  #define DEFAULT_HOMING_DIR_MASK ((1<<X_AXIS)|(1<<Y_AXIS)|(0<<Z_AXIS)) // X and Y endstop installed to the minimum (zero point). Z max installed and Z Min used for probe
+  #define DEFAULT_HOMING_FEED_RATE 25.0 // mm/min
+  #define DEFAULT_HOMING_SEEK_RATE 500.0 // mm/min
   #define DEFAULT_HOMING_DEBOUNCE_DELAY 250 // msec (0-65k)
   #define DEFAULT_HOMING_PULLOFF 1.0 // mm
 #endif
